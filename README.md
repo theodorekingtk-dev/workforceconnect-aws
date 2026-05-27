@@ -56,16 +56,6 @@ A SQL injection-style request was sent through the load balancer:
 
 ```bash
 ?id=1%20OR%201=1
-# Security Validation Performed
-
-The following security validation tests were completed during the project:
-
-## Load Balancer Validation
-- Verified ALB successfully routed traffic to EC2 target
-- Confirmed target group health checks passed
-- Verified public application accessibility through ALB DNS
-
-## WAF Protection Validation
 A SQL injection style payload was tested against the application:
 
 ```bash
