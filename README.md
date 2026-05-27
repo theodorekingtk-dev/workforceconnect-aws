@@ -73,6 +73,7 @@ Major infrastructure upgrades added during Week 3 included:
 - Malicious request blocking
 
 These upgrades significantly improved the project's:
+
 - Security posture
 - Scalability
 - Traffic management
@@ -101,6 +102,137 @@ These upgrades significantly improved the project's:
 ## Operating System & Tools
 - Linux (Amazon Linux 2023)
 - Git & GitHub
+
+---
+
+# Cost & Resource Management
+
+One of the major objectives of this project was building a production-style AWS environment while maintaining cost awareness and operating primarily within AWS Free Tier limits whenever possible.
+
+During Week 3, additional enterprise networking, monitoring, logging, and security services were introduced. Some services remained free or Free Tier eligible, while others, such as AWS Application Load Balancer and AWS WAF, introduced small operational costs.
+
+---
+
+## AWS Service Cost Breakdown
+
+| Service | Project Use | Estimated Cost |
+|---|---|---|
+| Amazon EC2 | Hosted the Flask web application on a Linux server | Free Tier Eligible |
+| Amazon RDS MySQL | Stored registration form data in a managed MySQL database | Free Tier Eligible / Low Usage |
+| AWS VPC | Provided the network foundation for public and private resources | No Additional Cost |
+| AWS Security Groups | Controlled inbound and outbound traffic between services | No Additional Cost |
+| AWS IAM | Managed roles, permissions, and least-privilege access | No Additional Cost |
+| AWS Application Load Balancer (ALB) | Routed public HTTP traffic to the EC2 target group | Small Hourly Cost |
+| AWS Target Groups | Connected the ALB to the backend EC2 instance | Included with ALB Usage |
+| AWS WAF | Protected the application from SQL injection and malicious web requests | Small Monthly/Rule Cost |
+| AWS CloudTrail | Logged AWS account activity and API events | Free Tier Eligible |
+| Amazon S3 | Stored CloudTrail audit logs | Minimal Storage Cost |
+| AWS CloudWatch Logs | Collected and monitored logs | Free Tier Eligible / Low Usage |
+| CloudWatch Alarms | Alerted on security-related events | Free Tier Eligible for limited alarms |
+| AWS SNS | Sent email notifications for alerts | Free Tier Eligible |
+| GitHub | Stored source code, screenshots, and project documentation | Free |
+
+---
+
+## Estimated Week 3 Cost Awareness
+
+The project was designed to stay low-cost while still using realistic cloud engineering services.
+
+Estimated cost considerations included:
+
+- EC2 usage remained low due to lightweight application hosting
+- RDS usage remained minimal because the database only stored test registration records
+- CloudTrail and CloudWatch stayed within low-volume logging usage
+- S3 storage costs remained minimal because CloudTrail logs were small
+- ALB introduced a small hourly cost because it continuously routes traffic
+- AWS WAF introduced the most noticeable Week 3 cost because Web ACLs and managed rule groups can create charges
+- GitHub documentation and version control had no cloud infrastructure cost
+
+---
+
+## Cost Control Measures Implemented
+
+To avoid unnecessary AWS charges during development and testing, the following cost management practices were used:
+
+- Monitored AWS Billing Dashboard during the project
+- Used AWS Free Tier eligible resources whenever possible
+- Kept the application lightweight with low traffic volume
+- Avoided unnecessary scaling or large compute resources
+- Used only required AWS WAF managed rule groups
+- Limited testing traffic to basic validation requests
+- Avoided high-volume load testing
+- Kept RDS usage small and limited to project data
+- Used CloudTrail and CloudWatch for basic monitoring without excessive log generation
+- Reviewed ALB and WAF usage because those services can create active charges
+- Documented resources used so they could be reviewed or removed after testing
+
+---
+
+## Cloud Resources Utilized
+
+### Compute Resources
+- Amazon EC2 Linux instance
+- Gunicorn production application server
+- NGINX reverse proxy server
+
+### Database Resources
+- Amazon RDS MySQL database
+- Private subnet database architecture
+- Application-to-database connectivity validation
+
+### Networking Resources
+- AWS VPC
+- Public subnet
+- Private subnet
+- AWS Security Groups
+- AWS Application Load Balancer
+- AWS Target Groups
+- HTTP traffic routing
+- Backend target health checks
+
+### Security Resources
+- AWS WAF
+- AWS IAM
+- Least-privilege permission concepts
+- SQL injection filtering
+- Layer 7 request inspection
+- AWS managed security rule groups
+- Security group hardening
+- Controlled HTTP and SSH access
+
+### Monitoring & Logging Resources
+- AWS CloudTrail
+- Amazon S3 log storage
+- AWS CloudWatch Logs
+- CloudWatch metric filters
+- CloudWatch alarms
+- AWS SNS email notifications
+
+### Development & Documentation Resources
+- Git
+- GitHub
+- README documentation
+- Project screenshots
+- Linux terminal commands
+- Application deployment files
+
+---
+
+## Resource Cleanup Considerations
+
+Because this project used services that may continue billing while active, the following resources should be reviewed after project completion:
+
+- Application Load Balancer
+- AWS WAF Web ACL
+- EC2 instance
+- RDS database
+- CloudWatch alarms
+- CloudWatch log groups
+- S3 CloudTrail log bucket
+- Target groups
+- Unused security groups
+
+This helps prevent unnecessary charges after testing and documentation are complete.
 
 ---
 
@@ -245,110 +377,6 @@ AWS WAF successfully deployed and associated with the AWS Application Load Balan
 A simulated SQL injection-style request was tested against the application through the ALB endpoint.
 
 Payload tested:
-
-```bash
-?id=1%20OR%201=1
-```
-
-AWS WAF successfully intercepted and blocked the malicious request by returning:
-
-```bash
-HTTP/1.1 403 Forbidden
-```
-
-This validated that AWS WAF filtering and managed protection rules were functioning correctly.
-
-![SQL Injection Blocked](screenshots/waf-sql-injection-blocked.png)
-
----
-
-# Security Features Added During Week 3
-
-The following enterprise-style protections and networking upgrades were implemented during the security phase of the project:
-
-- SQL Injection Filtering
-- Layer 7 Request Inspection
-- AWS Managed WAF Rules
-- Bot Traffic Protection
-- Reverse Proxy Architecture
-- Target Health Monitoring
-- Traffic Distribution Through ALB
-- Controlled Security Group Access
-- HTTP Request Filtering
-- Load Balanced Architecture
-- Production Request Routing
-
----
-
-# Skills Demonstrated
-
-## Cloud Engineering
-- Cloud Infrastructure Deployment
-- AWS Networking
-- Linux Server Administration
-- Production Flask Hosting
-- Reverse Proxy Configuration
-- Load Balancer Deployment
-- Full Stack Cloud Connectivity
-
-## Cloud Security
-- AWS WAF Deployment
-- SQL Injection Protection
-- Layer 7 Security Controls
-- Traffic Filtering
-- Security Group Hardening
-- Web Application Security Testing
-- Threat Mitigation Validation
-
-## DevOps & Operations
-- Git Version Control
-- GitHub Repository Management
-- Infrastructure Troubleshooting
-- Health Check Monitoring
-- Production Traffic Routing
-- Cloud Architecture Design
-
----
-
-# Architecture Summary
-
-## Week 2 Architecture
-
-User → EC2 → Flask/Gunicorn → RDS
-
-This initial deployment provided a functional cloud-hosted web application using AWS compute and database infrastructure.
-
----
-
-## Week 3 Architecture
-
-User → AWS ALB → AWS WAF → NGINX → Gunicorn → Flask → RDS
-
-This upgraded architecture introduced production-grade networking, request routing, traffic filtering, and web application firewall protections commonly used in enterprise cloud environments.
-
----
-
-# Key Accomplishments
-
-- Built and deployed a Flask application on AWS
-- Configured Linux-based EC2 infrastructure
-- Integrated Flask application with Amazon RDS MySQL
-- Configured Gunicorn production server
-- Implemented NGINX reverse proxy
-- Built AWS Application Load Balancer architecture
-- Configured AWS Target Groups and health monitoring
-- Hardened AWS Security Groups
-- Implemented AWS WAF protections
-- Successfully validated SQL injection filtering
-- Managed source control and documentation with GitHub
-- Simulated enterprise-style production cloud architecture
-
----
-
-# Author
-
-Theodore King
-A SQL injection style payload was tested against the application:
 
 ```bash
 ?id=1%20OR%201=1
