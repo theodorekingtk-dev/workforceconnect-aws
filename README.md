@@ -1,93 +1,61 @@
-# WorkforceConnect AWS Deployment
+# WorkforceConnect AWS Deployment & Security Upgrade
 
-A production-style cloud-hosted registration application deployed on AWS using Flask, Amazon EC2, Amazon RDS MySQL, Gunicorn, NGINX, AWS Application Load Balancer (ALB), AWS WAF, Linux, and GitHub.
+A production-style cloud engineering and cloud security project built on AWS using Flask, Amazon EC2, Amazon RDS MySQL, Gunicorn, NGINX, AWS Application Load Balancer (ALB), AWS WAF, Linux, and GitHub.
 
----
-
-# Project Overview
-
-This project demonstrates a real-world cloud deployment and security workflow by hosting a Python Flask application on AWS infrastructure with persistent MySQL database storage and enterprise-style traffic protection.
-
-The application allows users to submit registration information through a live web form, which is then stored securely in an Amazon RDS MySQL database.
-
-During the security phase of the project, additional production-grade AWS networking and security controls were implemented including:
-
-- Application Load Balancer (ALB)
-- AWS Web Application Firewall (WAF)
-- SQL Injection protection testing
-- NGINX reverse proxy
-- Layer 7 traffic filtering
-- Target group health checks
-- Security group hardening
+This project evolved from a basic cloud-hosted Flask application in Week 2 into a more secure, production-style AWS architecture in Week 3 by introducing enterprise networking, traffic filtering, and web application security protections.
 
 ---
 
-# Technologies Used
+# Project Evolution — Week 2 to Week 3
 
-## Cloud & Infrastructure
-- AWS EC2
-- AWS RDS MySQL
-- AWS Application Load Balancer (ALB)
-- AWS WAF
-- AWS VPC Networking
-- AWS Target Groups
-- AWS Security Groups
+## Week 2 — Initial Cloud Deployment
 
-## Backend & Application
-- Flask
-- Gunicorn
-- NGINX
-- MySQL
+During Week 2, the primary objective was deploying a functioning full-stack cloud application inside AWS infrastructure.
 
-## Operating System & Tools
-- Linux (Amazon Linux 2023)
-- Git & GitHub
+The project originally included:
+
+- Flask registration application
+- Amazon EC2 hosting
+- Gunicorn production server
+- Amazon RDS MySQL database
+- Linux server administration
+- Security group configuration
+- GitHub source control
+- Database connectivity validation
+
+At this stage, the application was functional and publicly accessible, but it lacked enterprise-grade traffic management and web security protections.
 
 ---
 
-# Live Application
+## Week 3 — Security & Production Architecture Upgrade
 
-The WorkforceConnect application is publicly accessible through an AWS Application Load Balancer.
+In Week 3, the project was upgraded to simulate a more realistic production cloud environment by adding advanced networking and security components.
 
-### WorkforceConnect Registration Form
-![Live App](screenshots/workforceconnect-app-running.png)
+Major upgrades included:
 
----
+### Infrastructure Upgrades
+- Added AWS Application Load Balancer (ALB)
+- Added AWS Target Groups
+- Configured health checks
+- Added NGINX reverse proxy layer
+- Improved request routing architecture
 
-# Initial AWS Deployment Validation
+### Security Upgrades
+- Added AWS WAF (Web Application Firewall)
+- Implemented SQL injection protection
+- Added AWS managed security rule sets
+- Added Layer 7 traffic filtering
+- Added malicious request blocking
+- Hardened security group rules
+- Implemented HTTP request inspection
 
-### Gunicorn Production Service Running
-![Gunicorn Running](screenshotsgunicorn-running.png)
+### Security Testing
+The application was tested against simulated malicious traffic to validate protection mechanisms.
 
-### AWS RDS Database Created
-![RDS Database](screenshots_rds-created.png)
+A SQL injection-style request was sent through the load balancer:
 
-### Database Validation Query
-![MySQL Query](screenshots_mysql-query.png)
-
-### GitHub Deployment Validation
-![GitHub Push](screenshots_github-push.png)
-
----
-
-# Security Enhancements (Week 3)
-
-This phase of the project focused on implementing enterprise-style security controls and production networking architecture within AWS.
-
-Security improvements added:
-
-- AWS Application Load Balancer (ALB)
-- AWS WAF (Web Application Firewall)
-- SQL Injection protection testing
-- Layer 7 traffic filtering
-- AWS managed security rule groups
-- Target group health checks
-- NGINX reverse proxy validation
-- HTTP traffic control through security groups
-- Production-style request routing
-
----
-
+```bash
+?id=1%20OR%201=1
 # Security Validation Performed
 
 The following security validation tests were completed during the project:
